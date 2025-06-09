@@ -50,7 +50,7 @@ const PEXELS_KEYWORDS = [
   "bicycle art"
 ].join(",");
 
-function shuffleArray(array: any[]) {
+function shuffleArray(array: string[]): string[] {
   // Fisher-Yates shuffle
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -72,9 +72,9 @@ async function fetchCyclingImagesBatch() {
     const data = await res.json();
     if (data.photos && data.photos.length > 0) {
       // Shuffle the batch
-      return shuffleArray(data.photos.map((p: any) => p.src.landscape));
+      return shuffleArray(data.photos.map((p: { src: { landscape: string } }) => p.src.landscape));
     }
-  } catch (e) {
+  } catch {
     // ignore
   }
   return [FALLBACK_IMAGE];
